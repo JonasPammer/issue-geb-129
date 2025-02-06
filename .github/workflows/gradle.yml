@@ -12,7 +12,7 @@ jobs:
       contents: read
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest] # Define OS matrix
+        os: [ubuntu-latest, macos-latest] # Define OS matrix
     steps:
       - uses: actions/checkout@v4
 
@@ -38,12 +38,6 @@ jobs:
         run: |
           echo "Listing files for Linux/macOS..."
           ls -lh build/gebContainer/recordings/*
-
-      - name: List Files in Recordings Directory (Windows)
-        if: ${{ runner.os == 'Windows' }} # Only run this step for Windows
-        run: |
-          echo "Listing files for Windows..."
-          dir build\gebContainer\recordings\*
 
       - name: Upload Recordings as Artifacts
         uses: actions/upload-artifact@v4
