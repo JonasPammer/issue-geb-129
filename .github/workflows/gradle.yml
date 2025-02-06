@@ -30,7 +30,6 @@ jobs:
           build-scan-terms-of-use-agree: "yes"
 
       - name: Run Integration Test
-        if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
         id: build
         run: ./gradlew integrationTest
 
