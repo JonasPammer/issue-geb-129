@@ -1,7 +1,8 @@
+
 Thumbs.db
 .DS_Store
 .gradle
-build/
+build/**
 target/
 out/
 .idea
@@ -12,3 +13,8 @@ out/
 .settings
 .classpath
 .factorypath
+
+!build/gebContainer/
+!build/gebContainer/recordings/
+!build/gebContainer/recordings/**
+
