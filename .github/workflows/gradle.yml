@@ -34,13 +34,17 @@ jobs:
         id: build
         run: ./gradlew integrationTest
 
-      - name: List Files in Recordings Directory
+      - name: List Files in Recordings Directory (Linux/macOS)
+        if: ${{ runner.os != 'Windows' }} # Only run this step for Linux/macOS
         run: |
-          if [[ "$RUNNER_OS" == "Linux" ]] || [[ "$RUNNER_OS" == "macOS" ]]; then
-            ls -lh build/gebContainer/recordings/*
-          elif [[ "$RUNNER_OS" == "Windows" ]]; then
-            dir build\\gebContainer\\recordings\\*
-          fi
+          echo "Listing files for Linux/macOS..."
+          ls -lh build/gebContainer/recordings/*
+
+      - name: List Files in Recordings Directory (Windows)
+        if: ${{ runner.os == 'Windows' }} # Only run this step for Windows
+        run: |
+          echo "Listing files for Windows..."
+          dir build\gebContainer\recordings\*
 
       - name: Upload Recordings as Artifacts
         uses: actions/upload-artifact@v4
