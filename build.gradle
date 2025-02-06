@@ -11,12 +11,10 @@ buildscript {
 
 plugins {
     id "groovy"
-    id "com.github.erdi.webdriver-binaries" version "3.2"
     id "war"
     id "idea"
     id "com.bertramlabs.asset-pipeline" version "4.5.1"
     id "application"
-    id "eclipse"
 }
 
 // Not Published to Gradle Plugin Portal
@@ -32,16 +30,13 @@ repositories {
 
 configurations {
     all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details->
-            if (details.requested.group == 'org.seleniumhq.selenium') {
-                details.useVersion('4.19.1')
-            }
-        }
+        resolutionStrategy.force "org.codehaus.groovy:groovy-xml:3.0.13"
     }
 }
 
 dependencies {
     profile "org.grails.profiles:web"
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
     implementation "io.github.virtualdogbert:logback-groovy-config:1.12.4"
     implementation "org.grails:grails-core"
     implementation "org.grails:grails-logging"
@@ -73,15 +68,12 @@ dependencies {
     testImplementation "org.grails:grails-gorm-testing-support"
     testImplementation "org.grails:grails-web-testing-support"
 
-    testImplementation "org.seleniumhq.selenium:selenium-api:4.19.1"
-    testImplementation "org.seleniumhq.selenium:selenium-remote-driver:4.19.1"
-    testImplementation "org.seleniumhq.selenium:selenium-support:4.19.1"
+    implementation 'org.grails.plugins:geb'
+    integrationTestImplementation testFixtures('org.grails.plugins:geb:4.1.1')
+
     testImplementation "org.spockframework:spock-core"
     // testImplementation "org.testcontainers:spock"
     // testImplementation "org.testcontainers:testcontainers"
-    testRuntimeOnly "org.seleniumhq.selenium:selenium-chrome-driver:4.19.1"
-    testRuntimeOnly "org.seleniumhq.selenium:selenium-firefox-driver:4.19.1"
-    testRuntimeOnly "org.seleniumhq.selenium:selenium-safari-driver:4.19.1"
 }
 
 application {
@@ -94,15 +86,7 @@ java {
 
 tasks.withType(Test) {
     useJUnitPlatform()
-    systemProperty "geb.env", System.getProperty('geb.env')
-    systemProperty "geb.build.reportsDir", reporting.file("geb/integrationTest")
-    systemProperty 'webdriver.chrome.driver', "${System.getenv('CHROMEWEBDRIVER')}/chromedriver"
-    systemProperty 'webdriver.gecko.driver', "${System.getenv('GECKOWEBDRIVER')}/geckodriver"
-}
-webdriverBinaries {
-    chromedriver '122.0.6260.0'
-    geckodriver '0.33.0'
-    edgedriver '110.0.1587.57'
+    systemProperty 'grails.geb.recording.mode', 'RECORD_ALL'
 }
 assets {
     minifyJs = true
