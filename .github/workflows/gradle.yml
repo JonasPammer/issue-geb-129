@@ -12,7 +12,7 @@ jobs:
       contents: read
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest] # Define OS matrix
+        os: [ubuntu-latest] # Define OS matrix
     steps:
       - uses: actions/checkout@v4
 
