@@ -1,35 +1,6 @@
-## Grails 6.2.3 Documentation
+Showcase for https://github.com/grails/geb/issues/129
 
-- [User Guide](https://docs.grails.org/6.2.3/guide/index.html)
-- [API Reference](https://docs.grails.org/6.2.3/api/index.html)
-- [Grails Guides](https://guides.grails.org/index.html)
----
+[video 1](build/gebContainer/recordings/20250206_203638/PASSED-Demo1Spec_select_multiple_options_in_continents_dropdown-20250206-203658.mp4)
+[video 4](build/gebContainer/recordings/20250206_203638/PASSED-Demo1Spec_verify_social_media_icons_exist_in_footer-20250206-203659.mp4)
 
-## Feature cache documentation
-
-- [Grails Cache Plugin documentation](https://grails-plugins.github.io/grails-cache/latest/guide/index.html)
-
-## Feature grails-web-console documentation
-
-- [Grails Web Console documentation](https://plugins.grails.org/plugin/sheehan/console)
-
-## Feature scaffolding documentation
-
-- [Grails Scaffolding Plugin documentation](https://grails.github.io/scaffolding/latest/groovydoc/)
-
-- [https://grails-fields-plugin.github.io/grails-fields/latest/guide/index.html](https://grails-fields-plugin.github.io/grails-fields/latest/guide/index.html)
-
-## Feature geb documentation
-
-- [Grails Geb Functional Testing for Grails documentation](https://github.com/grails3-plugins/geb#readme)
-
-- [https://www.gebish.org/manual/current/](https://www.gebish.org/manual/current/)
-
-## Feature testcontainers documentation
-
-- [https://www.testcontainers.org/](https://www.testcontainers.org/)
-
-## Feature asset-pipeline-grails documentation
-
-- [Grails Asset Pipeline Core documentation](https://www.asset-pipeline.com/manual/)
-
+Notice: When scrolling to the end, every test should have a different color. But they don't.

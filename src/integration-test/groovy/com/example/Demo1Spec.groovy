@@ -6,95 +6,48 @@ import grails.plugin.geb.ContainerGebSpec
 
 @Integration
 @Rollback
-class DemoSpec extends ContainerGebSpec {
+class Demo1Spec extends ContainerGebSpec {
 
-    void "test homepage title success"() {
-        when: "The home page is visited"
-        go '/'
+    void "verify page title"() {
+        when: "The background color is changed and the Selenium Test Page is visited"
+        go 'https://automationintesting.com/selenium/testpage/'
+        js.exec("document.body.style.backgroundColor = 'red'")
 
-        then: "The title is correct"
-        title == "Grails"
+        then: "The page title is as expected"
+        title == "Selenium Test Page | Automation in Testing"
     }
 
-    void "test homepage title failure"() {
-        when: "The home page is visited"
-        go '/'
+    void "select multiple options in continents dropdown"() {
+        when: "The background color is changed and multiple continents are selected"
+        go 'https://automationintesting.com/selenium/testpage/'
+        js.exec("document.body.style.backgroundColor = 'blue'")
+        def dropdown = $("#continent")
+        dropdown.find("option", value: "asia").click()
+        dropdown.find("option", value: "europe").click()
 
-        then: "The title is incorrect"
-        title == "Invalid Title"
+        then: "The options Asia and Europe are selected"
+        dropdown.find("option", value: "asia").@selected == "true"
+        dropdown.find("option", value: "europe").@selected == "true"
     }
 
-    void "test navigation bar is present"() {
-        when: "The home page is visited"
-        go '/'
+    void "verify social media icons exist in footer"() {
+        when: "The background color is changed and the page footer is examined for social media icons"
+        go 'https://automationintesting.com/selenium/testpage/'
+        js.exec("document.body.style.backgroundColor = 'green'")
 
-        then: "The navigation bar is displayed"
-        $("nav.navbar").displayed
+        then: "Social media links for Twitter and LinkedIn exist"
+        $("a[href*='twitter.com']").size() > 0
+        $("a[href*='linkedin.com']").size() > 0
     }
 
-    void "test accessing Grails Guides link in footer"() {
-        when: "The Grails Guides link in the footer is clicked"
-        go '/'
-        $("a", href: "https://guides.grails.org").click()
+    void "verify clicking submit button does nothing"() {
+        when: "The background color is changed and the form submit button is clicked"
+        go 'https://automationintesting.com/selenium/testpage/'
+        js.exec("document.body.style.backgroundColor = 'orange'")
+        $("#submitbutton").click()
 
-        then: "The Grails Guides page is opened"
-        // Assert redirected to the external link (adjust assertion for external navigation simulation)
-        currentUrl.contains("guides.grails.org")
+        then: "The submit button doesn't perform any navigation or action"
+        currentUrl.contains("selenium/testpage") // Still on the same page
     }
 
-    void "test footer elements visibility"() {
-        when: "The home page is visited"
-        go '/'
-
-        then: "The footer with Grails Guides section is visible"
-        $("div.footer").displayed
-        $("a[href='https://guides.grails.org']").text() == "Grails Guides"
-
-        and: "The Documentation section is also visible"
-        $("a[href='https://docs.grails.org']").text() == "Documentation"
-    }
-
-    void "test spinner is hidden on load"() {
-        when: "The home page is visited"
-        go '/'
-
-        then: "The spinner is not visible"
-        !$("div#spinner").displayed
-    }
-
-    void "test failure: Non-existent nav link"() {
-        when: "Trying to click a non-existent link in the navbar"
-        go '/'
-        $("a", text: "Non-Existent Link").click()
-
-        then: "An error occurs"
-        thrown(org.openqa.selenium.NoSuchElementException)
-    }
-
-    void "test navbar toggle button functionality"() {
-        when: "The navigation bar toggle button is clicked"
-        go '/'
-        $("button.navbar-toggler").click()
-
-        then: "The navigation menu expands"
-        $("div#navbarContent").attr("aria-expanded") == "true"
-    }
-
-    void "test community Slack link in footer"() {
-        when: "The Slack link in the footer is clicked"
-        go '/'
-        $("a", href: "https://slack.grails.org").click()
-
-        then: "The Slack page opens"
-        // Assert redirected to the external Slack page (simulation for navigation)
-        currentUrl.contains("slack.grails.org")
-    }
-
-    void "test failure: Invalid text in footer"() {
-        when: "The page footer is checked"
-        go '/'
-
-        then: "An intentionally wrong assertion fails"
-        $("div.footer").text().contains("Invalid Footer Text")
-    }
 }
